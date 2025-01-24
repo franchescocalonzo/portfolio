@@ -39,7 +39,7 @@ export default function Header() {
         </p>
       </div>
 
-      <img
+      <Image
         className="pointer-events-none mx-auto lg:w-[400px]"
         src="/avatars/me.webp"
         alt="Franchesco Calonzo"

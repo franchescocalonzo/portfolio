@@ -6,8 +6,8 @@ export default function About() {
           Growing up, my interest in computers never faded. Technology
           constantly amazes me, which led me to pursue a degree in Information
           Technology, where I was introduced to coding and web development. Fast
-          forward to today, I've had the privilege of building software for CIS
-          Bayad Center Inc.
+          forward to today, I&apos;ve had the privilege of building software for
+          CIS Bayad Center Inc.
           <a
             className="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
             href="https://us.mullenlowe.com/"
