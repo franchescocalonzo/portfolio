@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-
+import plugin from "tailwindcss/plugin";
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "sans-serif"], // Corrected "sans-serif"
+        sans: ["Inter", "sans-serif"],
       },
       keyframes: {
         blur: {
@@ -23,15 +23,15 @@ const config: Config = {
     },
   },
   plugins: [
-    function ({ addUtilities }) {
+    plugin(function ({ addUtilities }) {
       const newUtilities = {
         ".font-cv11": {
-          fontFeatureSettings: '"cv11"' /* This enables the single-story 'a' */,
+          fontFeatureSettings: '"cv11"',
         },
       };
       addUtilities(newUtilities);
-    },
-    function ({ addBase }) {
+    }),
+    plugin(function ({ addBase }) {
       addBase({
         "html, body, p, h1, h2, h3, h4, h5, h6, div, span, a": {
           "text-rendering": "optimizeLegibility",
@@ -39,7 +39,8 @@ const config: Config = {
           "-moz-osx-font-smoothing": "grayscale",
         },
       });
-    },
+    }),
   ],
 };
+
 export default config;
