@@ -16,19 +16,25 @@ export default function Header() {
         <div className="">
           <div className="flex gap-4 text-slate-800">
             <Image
-              className="h-[23px] w-[23px] text-slate-800"
+              className="text-slate-800"
               src="/icons/linkedin.svg"
               alt="CIS Bayad Center Inc. Logo"
+              height={23}
+              width={23}
             />
             <Image
               className="h-[23px] w-[23px]"
               src="/icons/git.svg"
               alt="CIS Bayad Center Inc. Logo"
+              height={23}
+              width={23}
             />
             <Image
               className="h-[23px] w-[23px]"
               src="/icons/codepen.svg"
               alt="CIS Bayad Center Inc. Logo"
+              height={23}
+              width={23}
             />
           </div>
         </div>
@@ -43,6 +49,9 @@ export default function Header() {
         className="pointer-events-none mx-auto lg:w-[400px]"
         src="/avatars/me.webp"
         alt="Franchesco Calonzo"
+        layout="responsive"
+        width={400} // Base width
+        height={400} // Base height
       />
     </header>
   );
