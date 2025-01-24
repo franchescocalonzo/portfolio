@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Header() {
   return (
     <header className="overflow-hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:pt-20">
@@ -13,17 +15,17 @@ export default function Header() {
 
         <div className="">
           <div className="flex gap-4 text-slate-800">
-            <img
+            <Image
               className="h-[23px] w-[23px] text-slate-800"
               src="/icons/linkedin.svg"
               alt="CIS Bayad Center Inc. Logo"
             />
-            <img
+            <Image
               className="h-[23px] w-[23px]"
               src="/icons/git.svg"
               alt="CIS Bayad Center Inc. Logo"
             />
-            <img
+            <Image
               className="h-[23px] w-[23px]"
               src="/icons/codepen.svg"
               alt="CIS Bayad Center Inc. Logo"

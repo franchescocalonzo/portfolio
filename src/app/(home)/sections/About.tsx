@@ -30,8 +30,8 @@ export default function About() {
           foundation for my journey as a developer.
           <span className="block h-3" />
           These days, my focus is on maintaining our product at Bayad Center. I
-          love seeing my work and designs come to life — it’s the most rewarding
-          part of the process for me.
+          love seeing my work and designs come to life — it&apos;s the most
+          rewarding part of the process for me.
           <span className="block h-3" />
           When I’m not working, I love hanging out with my honeybuhn, driving
           around and finding cozy cafes, spending time with my family and mah
