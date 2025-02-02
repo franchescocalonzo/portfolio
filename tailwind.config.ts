@@ -16,9 +16,14 @@ const config: Config = {
           "0%": { filter: "blur(3px)", opacity: "0" },
           "100%": { filter: "blur(0)", opacity: "1" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "100% 0%" },
+          "100%": { backgroundPosition: "0% 0%" },
+        },
       },
       animation: {
         blur: "blur 1.5s ease-out",
+        shimmer: "shimmer 2s linear infinite",
       },
     },
   },
