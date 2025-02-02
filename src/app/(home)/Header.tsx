@@ -9,11 +9,11 @@ export default function Header() {
     <header className="overflow-hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:pt-10">
       <div className="border-5 flex flex-col gap-2">
         <div className="flex flex-col gap-1">
-          <h1 className="animation-delay-500 mt-2 animate-blur overflow-visible text-3xl font-bold tracking-tight text-[#111827] sm:text-4xl">
+          <h1 className="animation-delay-500 mt-2 animate-blur overflow-visible text-3xl font-bold tracking-tight text-slate-800 sm:text-4xl">
             <a href="/">Franchesco Calonzo </a>
           </h1>
         </div>
-        <p className="animation-delay-500 max-w-sm animate-blur leading-6 text-slate-800">
+        <p className="animation-delay-500 max-w-sm animate-blur leading-6 text-slate-600">
           I build seamless web experiences and am excited to continue deepening
           my expertise in frontend development.
         </p>
