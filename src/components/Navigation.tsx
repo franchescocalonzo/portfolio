@@ -53,7 +53,7 @@ export default function AnimatedTabs() {
   return (
     <div className="relative flex w-full justify-center">
       {/* Container for the tabs */}
-      <div className="relative flex w-full justify-around gap-1 rounded-2xl border border-zinc-200 bg-[#323232] p-2">
+      <div className="relative flex w-full justify-around gap-1 rounded-2xl border border-zinc-200 bg-[#191C1B] p-2">
         {SECTION.map((section) => (
           <div key={section.label} className="relative flex-grow">
             {/* Animated background for the active tab */}

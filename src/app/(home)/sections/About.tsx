@@ -1,41 +1,49 @@
+"use client";
+import Image from "next/image";
+
+import { ShiveringText } from "@/components/TypeEffect";
 export default function About() {
   return (
     <>
-      <section id="about" aria-label="About me">
-        <p className="mb-4 leading-relaxed text-slate-800">
-          Growing up, my interest in computers never faded. Technology
-          constantly amazes me, which led me to pursue a degree in Information
-          Technology, where I was introduced to coding and web development. Fast
-          forward to today, I&apos;ve had the privilege of building software for
-          CIS Bayad Center Inc.
+      <section className="pb-2" id="about" aria-label="About me">
+        <p className="animation-delay-500 mb-4 animate-blur pt-24 text-sm leading-relaxed text-slate-500">
+          Growing up, my fascination with technology never faded—it only grew
+          stronger. That passion led me to software development, where I found
+          excitement in getting the answers to the whys and hows.
+          <span className="block h-3" />
+          My journey began as a Quality Assurance intern at{" "}
           <a
-            className="font-medium text-slate-200 hover:text-teal-300 focus-visible:text-teal-300"
-            href="https://us.mullenlowe.com/"
-            target="_blank"
+            className="font-medium text-slate-700 hover:text-slate-800"
+            href="https://cormant.io/"
             rel="noreferrer noopener"
-            aria-label="advertising agency (opens in a new tab)"
+            target="_blank"
+            aria-label="Go to Cormant Technologies official website"
           >
-            advertising agency
-          </a>
+            Cormant Technologies
+          </a>{" "}
+          , where I got my first exposure to software development. That
+          experience sharpened my attention to detail, strengthened my critical
+          thinking, and gave me the opportunity to be a part of the
+          collaborative process of building and maintaining software
+          applications.
           <span className="block h-3" />
-          In the past, I had the opportunity to start my journey into software
-          development as a Quality Assurance intern at Cormant Technologies.
-          This role provided me with my first exposure to the software
-          development lifecycle, where I was able to witness the collaborative
-          process of building and maintaining software systems.
-          <span className="block h-3" />
-          I pursued a QA role to deepen my understanding of software and develop
-          critical thinking skills. This experience taught me attention to
-          detail and sparked my passion for software development, laying the
-          foundation for my journey as a developer.
-          <span className="block h-3" />
-          These days, my focus is on maintaining our product at Bayad Center. I
-          love seeing my work and designs come to life — it&apos;s the most
+          Fast forward to today, I have the privilege of maintaining and
+          improving software at{" "}
+          <a
+            className="font-medium text-slate-700 hover:text-slate-800"
+            href="https://www.bayad.com/"
+            rel="noreferrer noopener"
+            target="_blank"
+            aria-label="Go to Bayad Center official website"
+          >
+            CIS Bayad Center Inc.
+          </a>{" "}
+          I love seeing my work and designs come to life — it&apos;s the most
           rewarding part of the process for me.
           <span className="block h-3" />
-          When I’m not working, I love hanging out with my honeybuhn, driving
-          around and finding cozy cafes, spending time with my family and mah
-          dogs, or playing Dota.
+          When I&apos;m not working, you&apos;ll find me hanging out with my
+          girlfriend, driving around in search of cozy cafés, spending time with
+          my family and mah dogs, or dominating in Dota.
         </p>
       </section>
     </>
