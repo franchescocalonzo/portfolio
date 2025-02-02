@@ -2,10 +2,17 @@
 import { motion, useInView } from "framer-motion";
 import * as React from "react";
 
-// Individual wrapper to ensure hooks are used correctly
-const BlurInWrapper = ({ child }: { child: React.ReactNode }) => {
+// Custom hook to handle useRef and useInView correctly
+const useBlurIn = () => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
+
+  return { ref, isInView };
+};
+
+// Component to wrap each child correctly
+const BlurInWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { ref, isInView } = useBlurIn();
 
   return (
     <motion.div
@@ -14,16 +21,17 @@ const BlurInWrapper = ({ child }: { child: React.ReactNode }) => {
       animate={isInView ? { filter: "blur(0px)", opacity: 1 } : {}}
       transition={{ duration: 1.2 }}
     >
-      {child}
+      {children}
     </motion.div>
   );
 };
 
+// Main component that applies the blur effect to each child
 export const BlurIn = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {React.Children.map(children, (child, index) => (
-        <BlurInWrapper key={index} child={child} />
+        <BlurInWrapper key={index}>{child}</BlurInWrapper>
       ))}
     </>
   );
