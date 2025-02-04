@@ -126,7 +126,7 @@ export default function Experience() {
                 2018
               </span>
               <span className="ml-auto text-[0.8rem] tracking-tight text-slate-500">
-                Philippines
+                Taguig PH
               </span>
             </div>
           </div>
