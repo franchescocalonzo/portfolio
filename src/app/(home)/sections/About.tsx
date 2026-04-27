@@ -1,17 +1,15 @@
 "use client";
-import Image from "next/image";
 
-import { ShiveringText } from "@/components/TypeEffect";
 export default function About() {
   return (
     <>
       <section className="pb-2" id="about" aria-label="About me">
         <p className="animation-delay-500 mb-4 animate-blur pt-24 text-sm leading-relaxed text-slate-500">
-          Growing up, my fascination with technology never faded—it only grew
-          stronger. That passion led me to software development, where I found
-          excitement in getting the answers to the whys and hows.
+          My interest in technology started early and naturally led me to
+          software development, where I discovered how rewarding it is to build
+          systems that solve real-world problems.
           <span className="block h-3" />
-          My journey began as a Quality Assurance intern at{" "}
+          I began my journey as a Quality Assurance intern at{" "}
           <a
             className="font-medium text-slate-700 hover:text-slate-800"
             href="https://cormant.io/"
@@ -20,15 +18,21 @@ export default function About() {
             aria-label="Go to Cormant Technologies official website"
           >
             Cormant Technologies
-          </a>{" "}
-          , where I got my first exposure to software development. That
-          experience sharpened my attention to detail, strengthened my critical
-          thinking, and gave me the opportunity to be a part of the
-          collaborative process of building and maintaining software
-          applications.
+          </a>
+          , where I was first exposed to the software development lifecycle and
+          the collaborative process of building and maintaining applications.
           <span className="block h-3" />
-          Fast forward to today, I have the privilege of maintaining and
-          improving software at{" "}
+          Since then, I&apos;ve had the opportunity to work on fintech platforms at{" "}
+          <a
+            className="font-medium text-slate-700 hover:text-slate-800"
+            href="https://moneygment.ph/"
+            rel="noreferrer noopener"
+            target="_blank"
+            aria-label="Go to Moneygment official website"
+          >
+            Moneygment
+          </a>{" "}
+          and payment systems at{" "}
           <a
             className="font-medium text-slate-700 hover:text-slate-800"
             href="https://www.bayad.com/"
@@ -37,13 +41,36 @@ export default function About() {
             aria-label="Go to Bayad Center official website"
           >
             CIS Bayad Center Inc.
-          </a>{" "}
-          I love seeing my work and designs come to life — it&apos;s the most
-          rewarding part of the process for me.
+          </a>
+          , contributing to software used in real-world financial transactions
+          and operational workflows.
           <span className="block h-3" />
-          When I&apos;m not working, you&apos;ll find me hanging out with my
-          girlfriend, driving around in search of cozy cafés, spending time with
-          my family and mah dogs, or dominating in Dota.
+          Today, I work on applications connected to{" "}
+          <a
+            className="font-medium text-slate-700 hover:text-slate-800"
+            href="https://www.bell.ca/"
+            rel="noreferrer noopener"
+            target="_blank"
+            aria-label="Go to Bell Canada official website"
+          >
+            Bell Canada
+          </a>
+          &apos;s infrastructure platforms, helping build and maintain systems
+          that support operational processes across nationwide telecom
+          infrastructure.
+          <span className="block h-3" />
+          Outside of coding, I enjoy exploring cozy cafés, spending time with my
+          family and my dogs, and unwinding with a few games of{" "}
+          <a
+            className="font-medium text-slate-700 hover:text-slate-800"
+            href="https://www.dota2.com/"
+            rel="noreferrer noopener"
+            target="_blank"
+            aria-label="Go to Dota 2 official website"
+          >
+            Dota
+          </a>
+          .
         </p>
       </section>
     </>

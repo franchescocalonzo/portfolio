@@ -31,7 +31,7 @@ export default function Footer() {
           href="https://nextjs.org/"
           rel="noreferrer noopener"
           target="_blank"
-          aria-label="Go to Visual Studio Code official website"
+          aria-label="Go to Next.js official website"
           className="font-semibold text-slate-600"
         >
           Next.js

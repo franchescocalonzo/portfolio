@@ -7,7 +7,7 @@ export default function Home() {
     <BlurIn>
       <div className="min-h-screen bg-[#FFFFFF]">
         <div className="mx-auto max-w-screen-xl px-4 py-10 py-5 font-sans md:px-12 md:py-10 lg:px-24 lg:py-0">
-          <div className="overflow:hidden min-h-screen lg:flex lg:justify-between lg:gap-4">
+          <div className="overflow-hidden min-h-screen lg:flex lg:justify-between lg:gap-4">
             <Header />
             <Main />
           </div>

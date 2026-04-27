@@ -26,7 +26,7 @@ export default function Header() {
             >
               <LinkedinIcon
                 className="animation-delay-500 h-[23px] w-[23px] animate-blur text-slate-800"
-                alt="CIS Bayad Center Inc. Logo"
+                aria-hidden
               />
             </a>
             <a
@@ -36,7 +36,7 @@ export default function Header() {
             >
               <GitIcon
                 className="animation-delay-500 h-[23px] w-[23px] animate-blur text-slate-800"
-                alt="CIS Bayad Center Inc. Logo"
+                aria-hidden
               />
             </a>
             <a
@@ -46,26 +46,34 @@ export default function Header() {
             >
               <CodePenIcon
                 className="animation-delay-500 h-[23px] w-[23px] animate-blur text-slate-800"
-                alt="CIS Bayad Center Inc. Logo"
+                aria-hidden
               />
             </a>
           </div>
         </div>
       </div>
-      <Image
-        className="pointer-events-none mx-auto lg:w-[400px]"
-        src="/avatars/me.webp"
-        alt="Franchesco Calonzo"
-        layout="responsive"
-        width={400} // Base width
-        height={400} // Base height
-        style={{
-          WebkitMaskImage:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0.6) 65%, rgba(0, 0, 0, 0.3) 85%, rgba(0, 0, 0, 0) 100%)",
-          maskImage:
-            "linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.3) 90%, rgba(0, 0, 0, 0) 100%)",
-        }}
-      />
+      <div className="relative mx-auto w-full max-w-[400px] flex-1 min-h-0 flex items-end justify-center pt-4 bg-white">
+        <Image
+          className="pointer-events-none object-contain object-bottom w-full h-full"
+          src="/avatars/me.webp"
+          alt="Franchesco Calonzo"
+          width={400}
+          height={400}
+          style={{
+            // Long, smooth fade so no visible line at the bottom (works all screen sizes)
+            WebkitMaskImage:
+              "linear-gradient(to bottom, black 0%, black 35%, rgba(0,0,0,0.95) 45%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.6) 68%, rgba(0,0,0,0.35) 80%, rgba(0,0,0,0.12) 90%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, black 0%, black 35%, rgba(0,0,0,0.95) 45%, rgba(0,0,0,0.85) 55%, rgba(0,0,0,0.6) 68%, rgba(0,0,0,0.35) 80%, rgba(0,0,0,0.12) 90%, transparent 100%)",
+            WebkitMaskSize: "100% 100%",
+            maskSize: "100% 100%",
+            WebkitMaskRepeat: "no-repeat",
+            maskRepeat: "no-repeat",
+            WebkitMaskPosition: "center bottom",
+            maskPosition: "center bottom",
+          }}
+        />
+      </div>
     </header>
   );
 }

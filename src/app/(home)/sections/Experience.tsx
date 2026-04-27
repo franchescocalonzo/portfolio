@@ -17,23 +17,23 @@ export default function Experience() {
           </span>
           <div className="ml-auto flex items-center">
             <img
-              src="/icons/bayad.svg"
-              alt="Bayad Logo"
+              src="/icons/bell.svg"
+              alt="Bell Canada Logo"
               className="h-6 w-6 object-contain p-0.5"
             />
-            <a href="https://www.bayad.com" target="_blank" rel="noreferrer">
+            <a href="https://www.bell.ca" target="_blank" rel="noreferrer">
               <span className="ml-1 text-sm font-medium tracking-tight text-slate-800">
-                CIS Bayad Center Inc.
+                Bell Canada
               </span>
             </a>
           </div>
         </div>
         <div className="flex flex-row">
           <span className="text-sm leading-tight text-slate-500">
-            2023 - Present
+            2025 - Present
           </span>
           <span className="ml-auto text-sm tracking-tight text-slate-500">
-            Philippines
+            Canada
           </span>
         </div>
       </div>
@@ -67,7 +67,36 @@ export default function Experience() {
         className="overflow-hidden"
       >
         <div className="ml-2 flex flex-col gap-2.5 border-l border-gray-200 pl-4">
-          {/* Role 1 */}
+          {/* Role 1: Bayad */}
+          <div className="flex flex-col">
+            <div className="flex flex-row">
+              <span className="font-base text-[0.8rem] tracking-tight text-[#111827]">
+                Software Engineer
+              </span>
+              <div className="ml-auto flex items-center">
+                <img
+                  src="/icons/bayad.svg"
+                  alt="Bayad Logo"
+                  className="h-6 w-6 object-contain p-0.5"
+                />
+                <a href="https://www.bayad.com" target="_blank" rel="noreferrer">
+                  <span className="ml-1 text-[0.8rem] tracking-tight text-slate-800">
+                    CIS Bayad Center Inc.
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div className="flex flex-row">
+              <span className="text-[0.8rem] leading-tight text-slate-400">
+                2023 - 2025
+              </span>
+              <span className="ml-auto text-[0.8rem] tracking-tight text-slate-500">
+                Philippines
+              </span>
+            </div>
+          </div>
+
+          {/* Role 2: Moneygment */}
           <div className="flex flex-col">
             <div className="flex flex-row">
               <span className="font-base text-[0.8rem] tracking-tight text-[#111827]">
@@ -100,9 +129,9 @@ export default function Experience() {
             </div>
           </div>
 
-          {/* Role 2 */}
+          {/* Role 3: Cormant */}
           <div className="flex flex-col">
-            <div className="-gap-10 flex flex-row">
+            <div className="flex flex-row">
               <span className="font-base text-[0.8rem] tracking-tight text-[#111827]">
                 Quality Assurance Associate
               </span>

@@ -282,7 +282,7 @@ html,
 body {
   font-family: "InterVariable", sans-serif;
   color: rgb(35, 31, 32);
-  cursor: url("/cursor/Undead.cur"), auto; /* Custom cursor */
+  cursor: url("/cursor/Undead.cur"), auto; /* Custom cursor with fallback */
   font-feature-settings: "cv11";
 }
 
