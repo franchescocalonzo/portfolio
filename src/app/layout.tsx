@@ -1,10 +1,29 @@
 import type { Metadata } from "next";
+import Script from "next/script";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
+const title = "Franchesco Calonzo — Software Engineer";
+const description =
+  "Software Engineer building reliable web applications for fintech and telecom. Currently supporting nationwide infrastructure platforms at Bell Canada.";
+
 export const metadata: Metadata = {
-  title: "Franchesco Calonzo",
-  description:
-    "Franchesco Calonzo — Software Engineer. Building seamless web experiences with a focus on frontend development.",
+  // Placeholder domain — replace with your deployed URL
+  metadataBase: new URL("https://franchesco-calonzo.vercel.app"),
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    images: ["/avatars/me.webp"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/avatars/me.webp"],
+  },
 };
 
 export default function RootLayout({
@@ -13,8 +32,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={"font-inter"}>{children}</body>
+    <html lang="en" suppressHydrationWarning className={GeistSans.variable}>
+      <body className="font-inter antialiased">
+        <Script id="theme-init" strategy="beforeInteractive">
+          {`(function(){try{var t=localStorage.getItem('theme');if(t!=='dark'&&t!=='light'&&t!=='ivory')t='ivory';document.documentElement.dataset.theme=t;document.documentElement.classList.toggle('dark',t==='dark');}catch(e){document.documentElement.dataset.theme='ivory';}})();`}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }

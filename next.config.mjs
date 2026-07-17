@@ -1,12 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    unoptimized: true, // Disable Next.js image optimization
+    unoptimized: true,
+  },
+  turbopack: {
+    rules: {
+      "*.svg": {
+        loaders: ["@svgr/webpack"],
+        as: "*.js",
+      },
+    },
   },
   webpack(config) {
     config.module.rules.push({
-      test: /\.svg$/, // Matches .svg files
-      use: ["@svgr/webpack"], // Use @svgr/webpack to handle them as React components
+      test: /\.svg$/,
+      use: ["@svgr/webpack"],
     });
 
     return config;

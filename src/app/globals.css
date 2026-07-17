@@ -267,9 +267,82 @@
   src: url("/fonts/inter/InterDisplay-BlackItalic.woff2") format("woff2");
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+/* Portfolio color tokens — ivory is the signature/default mode */
+:root {
+  --portfolio-bg: #f7f6f2;
+  --portfolio-bg-pattern: radial-gradient(
+    circle at top center,
+    #fcfbf8 0%,
+    #f7f6f2 45%,
+    #f1efe8 100%
+  );
+  --portfolio-surface: #fcfbf8;
+  --portfolio-surface-muted: #f1efe8;
+  --portfolio-surface-hover: #efede7;
+  --portfolio-border: #e7e4dd;
+  --portfolio-fg: #181818;
+  --portfolio-fg-secondary: #35332f;
+  --portfolio-muted: #64615c;
+  --portfolio-subtle: #8b8780;
+  --portfolio-card-bg: #fdfcf9;
+  --portfolio-card-border: #e7e4dd;
+  --portfolio-badge-bg: rgb(24 24 24 / 0.06);
+  --portfolio-row-hover: rgb(24 24 24 / 0.045);
+  --portfolio-card-hover: rgb(24 24 24 / 0.055);
+  --portfolio-grain-opacity: 0.012;
+  --portfolio-vignette-opacity: 0.045;
+}
+
+[data-theme="light"] {
+  --portfolio-bg: #fafafa;
+  --portfolio-bg-pattern: radial-gradient(
+    circle at top center,
+    #ffffff 0%,
+    #fafafa 50%,
+    #f1f1f1 100%
+  );
+  --portfolio-surface: #ffffff;
+  --portfolio-surface-muted: #f4f4f4;
+  --portfolio-surface-hover: #ececec;
+  --portfolio-border: #e5e5e5;
+  --portfolio-fg: #151515;
+  --portfolio-fg-secondary: #303030;
+  --portfolio-muted: #666666;
+  --portfolio-subtle: #8a8a8a;
+  --portfolio-card-bg: #ffffff;
+  --portfolio-card-border: #e5e5e5;
+  --portfolio-badge-bg: rgb(21 21 21 / 0.06);
+  --portfolio-row-hover: rgb(21 21 21 / 0.045);
+  --portfolio-card-hover: rgb(21 21 21 / 0.055);
+  --portfolio-grain-opacity: 0.01;
+  --portfolio-vignette-opacity: 0.035;
+}
+
+[data-theme="dark"],
+.dark {
+  --portfolio-bg: #141414;
+  --portfolio-bg-pattern: #141414;
+  --portfolio-surface: #1b1b1b;
+  --portfolio-surface-muted: #202020;
+  --portfolio-surface-hover: #262626;
+  --portfolio-border: #2a2a2a;
+  --portfolio-fg: #f5f5f3;
+  --portfolio-fg-secondary: #dfdfdc;
+  --portfolio-muted: #a5a5a2;
+  --portfolio-subtle: #858582;
+  --portfolio-card-bg: #1b1b1b;
+  --portfolio-card-border: #2a2a2a;
+  --portfolio-badge-bg: rgb(245 245 243 / 0.07);
+  --portfolio-row-hover: rgb(245 245 243 / 0.055);
+  --portfolio-card-hover: rgb(245 245 243 / 0.075);
+  --portfolio-grain-opacity: 0.015;
+  --portfolio-vignette-opacity: 0;
+}
 
 /* Root custom properties */
 .root {
@@ -281,13 +354,160 @@
 html,
 body {
   font-family: "InterVariable", sans-serif;
-  color: rgb(35, 31, 32);
-  cursor: url("/cursor/Undead.cur"), auto; /* Custom cursor with fallback */
+  color: var(--portfolio-fg);
+  background: var(--portfolio-bg-pattern);
   font-feature-settings: "cv11";
+  transition: background 0.95s ease-out, color 0.3s ease;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+  pointer-events: none;
+  content: "";
+}
+
+body::before {
+  opacity: var(--portfolio-grain-opacity);
+  background-image:
+    radial-gradient(circle at 20% 30%, currentColor 0 0.45px, transparent 0.75px),
+    radial-gradient(circle at 70% 60%, currentColor 0 0.4px, transparent 0.7px);
+  background-position:
+    0 0,
+    11px 17px;
+  background-size:
+    19px 19px,
+    23px 23px;
+  mix-blend-mode: multiply;
+}
+
+[data-theme="dark"] body::before,
+.dark body::before {
+  mix-blend-mode: screen;
+}
+
+body::after {
+  opacity: var(--portfolio-vignette-opacity);
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    transparent 58%,
+    currentColor 100%
+  );
 }
 
 @layer utilities {
+  .bg-portfolio {
+    background: var(--portfolio-bg-pattern);
+  }
+  .bg-portfolio-surface {
+    background-color: var(--portfolio-surface);
+  }
+  .bg-portfolio-muted {
+    background-color: var(--portfolio-surface-muted);
+  }
+  .bg-portfolio-hover {
+    background-color: var(--portfolio-surface-hover);
+  }
+  .border-portfolio {
+    border-color: var(--portfolio-border);
+  }
+  .bg-portfolio-border {
+    background-color: var(--portfolio-border);
+  }
+  .bg-portfolio-card {
+    background-color: var(--portfolio-card-bg);
+  }
+  .border-portfolio-card {
+    border-color: var(--portfolio-card-border);
+  }
+  .bg-portfolio-card-border {
+    background-color: var(--portfolio-card-border);
+  }
+  .bg-portfolio-badge {
+    background-color: var(--portfolio-badge-bg);
+  }
+  .hover\:bg-portfolio-card:hover {
+    background-color: var(--portfolio-card-bg);
+  }
+  .hover\:bg-portfolio-row:hover {
+    background-color: var(--portfolio-row-hover);
+  }
+  .hover\:bg-portfolio-card-hover:hover {
+    background-color: var(--portfolio-card-hover);
+  }
+  .text-portfolio {
+    color: var(--portfolio-fg);
+  }
+  .text-portfolio-secondary {
+    color: var(--portfolio-fg-secondary);
+  }
+  .text-portfolio-muted {
+    color: var(--portfolio-muted);
+  }
+  .text-portfolio-subtle {
+    color: var(--portfolio-subtle);
+  }
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+/* Signature handwriting draw-on animation (centerline stroke) */
+@keyframes signature-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.signature-draw path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: signature-draw 3s ease-in forwards;
+}
+
+/* Signature left-to-right reveal — draws in strictly, letter after letter */
+@keyframes signature-wipe {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.signature-wipe {
+  clip-path: inset(0 100% 0 0);
+  animation: signature-wipe 2.6s ease-in forwards;
+}
+
+@keyframes hero-intro-cursor {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  46%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.hero-intro-cursor {
+  animation: hero-intro-cursor 500ms steps(1, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .signature-draw path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .signature-wipe {
+    animation: none;
+    clip-path: none;
+  }
+  .hero-intro-cursor {
+    animation: none;
   }
 }

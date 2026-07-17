@@ -1,38 +1,23 @@
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className="max-w-md bg-white pb-2 text-sm text-slate-800">
-      <p className="my-2 text-[0.8rem] text-slate-500">
-        Designed with intention and creativity in{" "}
+    <footer className="mt-12 border-t border-portfolio-card pb-6 pt-6 text-sm transition-colors">
+      <p className="mb-2 text-[0.8rem] text-portfolio-muted">
+        Designed in{" "}
         <a
           href="https://www.figma.com/"
           rel="noreferrer noopener"
           target="_blank"
-          aria-label="Go to Figma official website"
-          className="font-semibold text-slate-600"
+          className="font-semibold text-portfolio-secondary transition-colors hover:text-portfolio"
         >
           Figma
         </a>
-        , and thoughtfully brought to life in{" "}
-        <a
-          href="https://code.visualstudio.com/"
-          rel="noreferrer noopener"
-          target="_blank"
-          aria-label="Go to Visual Studio Code official website"
-          className="font-semibold text-slate-600"
-        >
-          Visual Studio Code
-        </a>
-        .
-      </p>
-      <p className="mb-2 text-[0.8rem] text-slate-500">
-        Powered by{" "}
+        , built with{" "}
         <a
           href="https://nextjs.org/"
           rel="noreferrer noopener"
           target="_blank"
-          aria-label="Go to Next.js official website"
-          className="font-semibold text-slate-600"
+          className="font-semibold text-portfolio-secondary transition-colors hover:text-portfolio"
         >
           Next.js
         </a>{" "}
@@ -41,28 +26,30 @@ export default function Footer() {
           href="https://tailwindcss.com/"
           rel="noreferrer noopener"
           target="_blank"
-          aria-label="Go to  Tailwind CSS official website"
-          className="font-semibold text-slate-600"
+          className="font-semibold text-portfolio-secondary transition-colors hover:text-portfolio"
         >
           Tailwind CSS
         </a>
-        , and gracefully deployed with{" "}
+        , deployed on{" "}
         <a
           href="https://vercel.com/"
           rel="noreferrer noopener"
           target="_blank"
-          aria-label="Go to Vercel official website"
-          className="font-semibold text-slate-600"
+          className="font-semibold text-portfolio-secondary transition-colors hover:text-portfolio"
         >
           Vercel
         </a>
         .
       </p>
-      <p className="mb-2 text-[0.8rem] text-slate-500">
-        Artfully crafted by Franchesco Calonzo © {currentYear}
-      </p>
-      <p className="text-[0.8rem] text-slate-500">
-        Simplicity in every detail.
+      <p className="text-[0.8rem] text-portfolio-muted">
+        © {currentYear} Franchesco Calonzo ·{" "}
+        <a
+          href="mailto:hello@franchesco.dev"
+          className="font-semibold text-portfolio-secondary transition-colors hover:text-portfolio"
+        >
+          Get in touch
+        </a>{" "}
+        · Simplicity in every detail.
       </p>
     </footer>
   );

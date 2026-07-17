@@ -1,17 +1,20 @@
 "use client";
 
+import SectionHeader from "@/components/SectionHeader";
+
 export default function About() {
   return (
     <>
       <section className="pb-2" id="about" aria-label="About me">
-        <p className="animation-delay-500 mb-4 animate-blur pt-24 text-sm leading-relaxed text-slate-500">
+        <SectionHeader title="About" />
+        <p className="mb-4 animate-blur text-sm leading-relaxed text-portfolio-muted">
           My interest in technology started early and naturally led me to
           software development, where I discovered how rewarding it is to build
           systems that solve real-world problems.
           <span className="block h-3" />
           I began my journey as a Quality Assurance intern at{" "}
           <a
-            className="font-medium text-slate-700 hover:text-slate-800"
+            className="font-medium text-portfolio-secondary transition-colors hover:text-portfolio"
             href="https://cormant.io/"
             rel="noreferrer noopener"
             target="_blank"
@@ -24,7 +27,7 @@ export default function About() {
           <span className="block h-3" />
           Since then, I&apos;ve had the opportunity to work on fintech platforms at{" "}
           <a
-            className="font-medium text-slate-700 hover:text-slate-800"
+            className="font-medium text-portfolio-secondary transition-colors hover:text-portfolio"
             href="https://moneygment.ph/"
             rel="noreferrer noopener"
             target="_blank"
@@ -34,7 +37,7 @@ export default function About() {
           </a>{" "}
           and payment systems at{" "}
           <a
-            className="font-medium text-slate-700 hover:text-slate-800"
+            className="font-medium text-portfolio-secondary transition-colors hover:text-portfolio"
             href="https://www.bayad.com/"
             rel="noreferrer noopener"
             target="_blank"
@@ -47,7 +50,7 @@ export default function About() {
           <span className="block h-3" />
           Today, I work on applications connected to{" "}
           <a
-            className="font-medium text-slate-700 hover:text-slate-800"
+            className="font-medium text-portfolio-secondary transition-colors hover:text-portfolio"
             href="https://www.bell.ca/"
             rel="noreferrer noopener"
             target="_blank"
@@ -62,7 +65,7 @@ export default function About() {
           Outside of coding, I enjoy exploring cozy cafés, spending time with my
           family and my dogs, and unwinding with a few games of{" "}
           <a
-            className="font-medium text-slate-700 hover:text-slate-800"
+            className="font-medium text-portfolio-secondary transition-colors hover:text-portfolio"
             href="https://www.dota2.com/"
             rel="noreferrer noopener"
             target="_blank"
