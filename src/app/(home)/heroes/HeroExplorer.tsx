@@ -17,7 +17,7 @@ import {
 const LINKEDIN = "https://www.linkedin.com/in/franchesco-dev/";
 const GITHUB = "https://github.com/franchescocalonzo";
 const EMAIL = "mailto:hello@franchesco.dev";
-const RESUME = "/resume.pdf";
+const RESUME = "/Franchesco-Calonzo-Resume.pdf";
 const NAME = "franchesco";
 // let hasPlayedHeroIntro = false;
 
