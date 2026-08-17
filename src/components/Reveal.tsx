@@ -7,7 +7,8 @@ const DURATION = 0.6;
 const DISTANCE = 16;
 const STAGGER = 0.08;
 
-const VIEWPORT = { once: true, amount: 0.15, margin: "0px 0px -12% 0px" };
+// Expand the bottom of the detection area so page-end elements still fire.
+const VIEWPORT = { once: true, amount: "some" as const, margin: "0px 0px 20% 0px" };
 
 type RevealProps = {
   children: React.ReactNode;
