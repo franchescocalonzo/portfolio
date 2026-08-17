@@ -1,4 +1,5 @@
 import SectionHeader from "@/components/SectionHeader";
+import { Reveal } from "@/components/Reveal";
 
 // Sample stack — replace with your actual technologies
 const stack = [
@@ -19,17 +20,21 @@ const stack = [
 export default function Stack() {
   return (
     <section id="stack" aria-label="Tech stack">
-      <SectionHeader title="Stack" />
-      <div className="flex flex-wrap gap-2">
-        {stack.map((tech) => (
-          <span
-            key={tech}
-            className="rounded-full bg-portfolio-badge px-3 py-1.5 text-xs font-medium text-portfolio-secondary transition-colors hover:bg-portfolio-hover hover:text-portfolio"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
+      <Reveal>
+        <SectionHeader title="Stack" />
+      </Reveal>
+      <Reveal delay={0.08}>
+        <div className="flex flex-wrap gap-2">
+          {stack.map((tech) => (
+            <span
+              key={tech}
+              className="bg-portfolio-badge text-portfolio-secondary hover:bg-portfolio-hover hover:text-portfolio rounded-full px-3 py-1.5 text-xs font-medium transition-colors"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }

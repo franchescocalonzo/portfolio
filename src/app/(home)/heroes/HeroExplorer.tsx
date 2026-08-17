@@ -7,7 +7,7 @@ import {
   type ReactNode,
   type SVGProps,
 } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   formatWordmark,
   typographyConcepts,
@@ -17,8 +17,9 @@ import {
 const LINKEDIN = "https://www.linkedin.com/in/franchesco-dev/";
 const GITHUB = "https://github.com/franchescocalonzo";
 const EMAIL = "mailto:hello@franchesco.dev";
+const RESUME = "/resume.pdf";
 const NAME = "franchesco";
-let hasPlayedHeroIntro = false;
+// let hasPlayedHeroIntro = false;
 
 type ExplorerMode = "signatures" | "type";
 type NameVariant = "text" | "sig1" | "sig2" | "sig3" | "sig4anim";
@@ -50,6 +51,7 @@ const socialLinks: {
 }[] = [
   { label: "GitHub", href: GITHUB, external: true, Icon: GitHubIcon },
   { label: "LinkedIn", href: LINKEDIN, external: true, Icon: LinkedInIcon },
+  { label: "Resume", href: RESUME, external: true, Icon: ResumeIcon },
   { label: "Email", href: EMAIL, Icon: EmailIcon },
 ];
 
@@ -108,6 +110,25 @@ function LinkedInIcon(props: SVGProps<SVGSVGElement>) {
       <path d="M10.5 18v-5.1a2.9 2.9 0 0 1 5.8 0V18" />
       <path d="M10.5 10v8" />
       <path d="M6.5 6.6v.1" />
+    </svg>
+  );
+}
+
+function ResumeIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.85"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M8 3.5h6.5L18.5 8v12.5a2 2 0 0 1-2 2h-8.5a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2Z" />
+      <path d="M14.5 3.5V8h4" />
+      <path d="M9 12.5h6" />
+      <path d="M9 16h6" />
     </svg>
   );
 }
@@ -194,8 +215,8 @@ type TypeControls = {
 };
 
 const revealTransition = {
-  duration: 0.65,
-  ease: "easeOut",
+  duration: 0.6,
+  ease: [0.22, 1, 0.36, 1],
 } as const;
 
 function RevealHeroItem({
@@ -205,11 +226,17 @@ function RevealHeroItem({
   children: React.ReactNode;
   delay: number;
 }) {
+  const reduceMotion = useReducedMotion();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ ...revealTransition, delay }}
+      transition={{
+        ...revealTransition,
+        duration: reduceMotion ? 0.2 : revealTransition.duration,
+        delay: reduceMotion ? 0 : delay,
+      }}
     >
       {children}
     </motion.div>
@@ -239,7 +266,9 @@ function Wordmark({
         fontSize: controls.size,
         lineHeight: 1.05,
         color,
-        transition: color ? "color 0.95s ease-out" : undefined,
+        transition: color
+          ? "color 0.2s cubic-bezier(0.4, 0, 0.2, 1)"
+          : undefined,
       }}
     >
       {text ?? formatWordmark(NAME, controls.caseStyle, controls.period)}
@@ -300,6 +329,7 @@ function HeroTypography({
   introText: string;
   showCursor: boolean;
 }) {
+  const reduceMotion = useReducedMotion();
   const title = revealReady
     ? formatWordmark(NAME, controls.caseStyle, controls.period)
     : introText;
@@ -332,7 +362,12 @@ function HeroTypography({
         ) : (
           <motion.h1
             layout="position"
-            transition={{ duration: 0.95, ease: "easeOut" }}
+            initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              ...revealTransition,
+              duration: reduceMotion ? 0.2 : revealTransition.duration,
+            }}
             aria-label={title.replace("|", "")}
           >
             <Wordmark
@@ -351,7 +386,7 @@ function HeroTypography({
                   fontWeight: controls.weight,
                   lineHeight: 1,
                   color: titleColor,
-                  transition: "color 0.95s ease-out",
+                  transition: "color 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
                 }}
               >
                 |
@@ -361,26 +396,26 @@ function HeroTypography({
         )}
         {revealReady && (
           <>
-            <RevealHeroItem delay={0.1}>
+            <RevealHeroItem delay={0.08}>
               <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-portfolio-subtle">
                 Software Engineer · Philippines
               </p>
             </RevealHeroItem>
             <div className="mx-auto mt-10 max-w-sm space-y-4 text-sm leading-relaxed text-portfolio-muted">
-              <RevealHeroItem delay={0.2}>
+              <RevealHeroItem delay={0.16}>
                 <p>
                   Building and improving production web applications used by
                   real businesses.
                 </p>
               </RevealHeroItem>
-              <RevealHeroItem delay={0.3}>
+              <RevealHeroItem delay={0.24}>
                 <p>
                   I enjoy solving problems through software and contributing to
                   products that people rely on every day.
                 </p>
               </RevealHeroItem>
             </div>
-            <RevealHeroItem delay={0.4}>
+            <RevealHeroItem delay={0.32}>
               <div className="mt-10 flex justify-center">
                 <TextLinks />
               </div>
@@ -675,6 +710,18 @@ function useHeroIntro({
   onComplete?: () => void;
   onTitleAnchor?: () => void;
 }) {
+  // Typing intro disabled for now — skip straight to the final hero.
+  const [titleAnchored] = useState(true);
+  const [revealReady] = useState(true);
+  const [introText] = useState("franchesco.");
+  const [showCursor] = useState(false);
+
+  useEffect(() => {
+    onTitleAnchor?.();
+    onComplete?.();
+  }, [onComplete, onTitleAnchor]);
+
+  /*
   const [titleAnchored, setTitleAnchored] = useState(hasPlayedHeroIntro);
   const [revealReady, setRevealReady] = useState(hasPlayedHeroIntro);
   const [introText, setIntroText] = useState(
@@ -772,6 +819,7 @@ function useHeroIntro({
       cancelled = true;
     };
   }, [onComplete, onTitleAnchor]);
+  */
 
   return { titleAnchored, revealReady, introText, showCursor };
 }

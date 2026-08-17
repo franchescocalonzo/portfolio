@@ -272,15 +272,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
-/* Portfolio color tokens — ivory is the signature/default mode */
+/* Portfolio color tokens — dark is the default; ivory/light are opt-in */
 :root {
+  /* Match Prateek-style theme switch: solid colors + 200ms both ways */
+  --theme-duration: 0.2s;
+  --theme-ease: cubic-bezier(0.4, 0, 0.2, 1);
   --portfolio-bg: #f7f6f2;
-  --portfolio-bg-pattern: radial-gradient(
-    circle at top center,
-    #fcfbf8 0%,
-    #f7f6f2 45%,
-    #f1efe8 100%
-  );
   --portfolio-surface: #fcfbf8;
   --portfolio-surface-muted: #f1efe8;
   --portfolio-surface-hover: #efede7;
@@ -299,18 +296,12 @@
 }
 
 [data-theme="light"] {
-  --portfolio-bg: #fafafa;
-  --portfolio-bg-pattern: radial-gradient(
-    circle at top center,
-    #ffffff 0%,
-    #fafafa 50%,
-    #f1f1f1 100%
-  );
+  --portfolio-bg: #ffffff;
   --portfolio-surface: #ffffff;
   --portfolio-surface-muted: #f4f4f4;
   --portfolio-surface-hover: #ececec;
   --portfolio-border: #e5e5e5;
-  --portfolio-fg: #151515;
+  --portfolio-fg: #111827;
   --portfolio-fg-secondary: #303030;
   --portfolio-muted: #666666;
   --portfolio-subtle: #8a8a8a;
@@ -325,13 +316,12 @@
 
 [data-theme="dark"],
 .dark {
-  --portfolio-bg: #141414;
-  --portfolio-bg-pattern: #141414;
+  --portfolio-bg: #1a1818;
   --portfolio-surface: #1b1b1b;
   --portfolio-surface-muted: #202020;
   --portfolio-surface-hover: #262626;
   --portfolio-border: #2a2a2a;
-  --portfolio-fg: #f5f5f3;
+  --portfolio-fg: #ffffff;
   --portfolio-fg-secondary: #dfdfdc;
   --portfolio-muted: #a5a5a2;
   --portfolio-subtle: #858582;
@@ -355,9 +345,13 @@ html,
 body {
   font-family: "InterVariable", sans-serif;
   color: var(--portfolio-fg);
-  background: var(--portfolio-bg-pattern);
+  /* Solid only — same interpolation both directions (like prateekkeshari.com) */
+  background-color: var(--portfolio-bg);
   font-feature-settings: "cv11";
-  transition: background 0.95s ease-out, color 0.3s ease;
+  transition:
+    background-color var(--theme-duration) var(--theme-ease),
+    color var(--theme-duration) var(--theme-ease),
+    border-color var(--theme-duration) var(--theme-ease);
 }
 
 body::before,
@@ -367,6 +361,7 @@ body::after {
   z-index: 2147483647;
   pointer-events: none;
   content: "";
+  transition: opacity var(--theme-duration) var(--theme-ease);
 }
 
 body::before {
@@ -400,34 +395,45 @@ body::after {
 
 @layer utilities {
   .bg-portfolio {
-    background: var(--portfolio-bg-pattern);
+    background-color: var(--portfolio-bg);
+    transition:
+      background-color var(--theme-duration) var(--theme-ease),
+      color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-surface {
     background-color: var(--portfolio-surface);
+    transition: background-color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-muted {
     background-color: var(--portfolio-surface-muted);
+    transition: background-color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-hover {
     background-color: var(--portfolio-surface-hover);
   }
   .border-portfolio {
     border-color: var(--portfolio-border);
+    transition: border-color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-border {
     background-color: var(--portfolio-border);
+    transition: background-color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-card {
     background-color: var(--portfolio-card-bg);
+    transition: background-color var(--theme-duration) var(--theme-ease);
   }
   .border-portfolio-card {
     border-color: var(--portfolio-card-border);
+    transition: border-color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-card-border {
     background-color: var(--portfolio-card-border);
+    transition: background-color var(--theme-duration) var(--theme-ease);
   }
   .bg-portfolio-badge {
     background-color: var(--portfolio-badge-bg);
+    transition: background-color var(--theme-duration) var(--theme-ease);
   }
   .hover\:bg-portfolio-card:hover {
     background-color: var(--portfolio-card-bg);
@@ -440,15 +446,19 @@ body::after {
   }
   .text-portfolio {
     color: var(--portfolio-fg);
+    transition: color var(--theme-duration) var(--theme-ease);
   }
   .text-portfolio-secondary {
     color: var(--portfolio-fg-secondary);
+    transition: color var(--theme-duration) var(--theme-ease);
   }
   .text-portfolio-muted {
     color: var(--portfolio-muted);
+    transition: color var(--theme-duration) var(--theme-ease);
   }
   .text-portfolio-subtle {
     color: var(--portfolio-subtle);
+    transition: color var(--theme-duration) var(--theme-ease);
   }
   .text-balance {
     text-wrap: balance;

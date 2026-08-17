@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import SectionHeader from "@/components/SectionHeader";
+import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 
 type Entry = {
   question: string;
@@ -20,39 +21,35 @@ function Paragraphs({ children }: { children: string[] }) {
   );
 }
 
+function Quote({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-portfolio-secondary font-normal tracking-[0.01em] italic">
+      {children}
+    </p>
+  );
+}
+
 const entries: Entry[] = [
   {
     question: "How do I approach a new task?",
     answer: (
       <>
-        <p>
-          Most tickets I&apos;ve worked on throughout my career already
-          describe a solution.
-        </p>
-        <p className="text-portfolio-secondary">
+        <p>Most tickets I&apos;ve worked on already describe a solution:</p>
+        <Quote>
           &ldquo;Add this button.&rdquo; &ldquo;Create a new page.&rdquo;
-          &ldquo;Add a filter.&rdquo; &ldquo;Implement this feature.&rdquo;
-        </p>
-        <p>
-          Before I think about implementation, I usually ask myself one
-          question:
-        </p>
-        <p className="text-portfolio-secondary">
+          &ldquo;Add a filter.&rdquo;
+        </Quote>
+        <p>Before thinking about implementation, I ask myself:</p>
+        <Quote>
           &ldquo;What problem are we actually trying to solve?&rdquo;
+        </Quote>
+        <p>
+          Sometimes, the right solution isn&apos;t to create or add something
+          new, but to simply improve or extend what&apos;s already there.
         </p>
         <p>
-          That answer is often missing. A ticket usually explains what needs to
-          be built, but not why the request exists in the first place.
-        </p>
-        <p>
-          Once I understand the context, I can think beyond the ticket itself.
-          Sometimes the proposed solution is exactly what&apos;s needed. Other
-          times, there&apos;s a simpler approach that solves the same problem
-          with less complexity.
-        </p>
-        <p>
-          I&apos;ve learned that understanding the problem first almost always
-          leads to better engineering decisions.
+          I&apos;ve learned that understanding the problem first leads to better
+          engineering decisions.
         </p>
       </>
     ),
@@ -62,10 +59,8 @@ const entries: Entry[] = [
     answer: (
       <Paragraphs>
         {[
-          "Before touching an existing system, I want to understand how everything fits together.",
-          "I think about the purpose of the feature, how it affects the rest of the product, what risks come with the change, and what could happen once it reaches production.",
-          "Writing the code is usually the straightforward part.",
-          "Understanding the impact of that change is where most of the thinking happens.",
+          "Before touching an existing system, I want to understand how everything fits together. I think about the purpose of the change, how it affects the rest of the product, what risks come with it, and what could happen once it reaches production.",
+          "Writing the code is usually the straightforward part. Understanding the impact of that change is where most of the thinking happens.",
         ]}
       </Paragraphs>
     ),
@@ -75,23 +70,21 @@ const entries: Entry[] = [
     answer: (
       <Paragraphs>
         {[
-          "Not every production issue has an obvious cause.",
-          "Some bugs only happen in a specific environment, after a particular sequence of actions, or under conditions that aren't immediately visible.",
-          "Instead of jumping straight to a solution, I prefer reproducing the issue, gathering context, and following the evidence first.",
-          "My background in QA taught me that understanding why something happened is just as important as fixing it.",
+          "Production issues aren't always straightforward to diagnose. A bug may only appear in a specific environment, after a particular sequence of actions, or under conditions that aren't immediately visible.",
+          "Before fixing an issue, I prefer to reproduce it, understand what is actually happening, and gather enough context to identify the cause.",
+          "My background in QA taught me that a reliable fix starts with understanding why the issue happened, not just making the symptom disappear.",
         ]}
       </Paragraphs>
     ),
   },
   {
-    question: "How do I approach frontend development?",
+    question: "How do I handle design as a developer?",
     answer: (
       <Paragraphs>
         {[
-          "Not every company I've worked with had dedicated UI or UX designers, so I learned to think beyond implementation.",
-          "When building a feature, I don't only think about how it works—I also think about how people will use it and how easy it will be to maintain.",
-          "There are many ways to build the same interface, but I try to find the balance between usability, technical feasibility, and long-term maintainability.",
-          "Good frontend engineering isn't only about implementing designs. It's about making practical product decisions that benefit both users and the engineering team.",
+          "I treat frontend work as both implementation and design.",
+          "When I build a feature, I think about more than making it work. I try to keep the experience simple and intuitive, without overcomplicating the interface, while keeping the code practical and maintainable.",
+          "Working on teams without a dedicated designer pushed me to develop that judgment. I aim for interfaces that feel considered — usable, functional, and visually professional — without adding unnecessary complexity.",
         ]}
       </Paragraphs>
     ),
@@ -101,31 +94,10 @@ const entries: Entry[] = [
     answer: (
       <Paragraphs>
         {[
-          "I don't believe existing code should be rewritten just because there's a newer or cleaner way to do it.",
-          "If something is stable and continues to solve the problem, I prefer respecting the work that's already there.",
-          "But if I'm already working in that part of the system and there's a clear opportunity to simplify it, I'll usually take it.",
-          "I don't mind spending a little more time if it makes the next change easier to build.",
+          "When working on an existing system, I don't make refactoring a priority unless there's a reason to. If a new feature or bug fix takes me into that part of the code, that's when I look for things that can be simplified or made easier to maintain.",
+          "I don't refactor just for the sake of it. But if I'm already there and a small change can make things easier for the next person or the next feature, I'll take the opportunity.",
         ]}
       </Paragraphs>
-    ),
-  },
-  {
-    question: "What kind of engineer am I trying to become?",
-    answer: (
-      <>
-        <p>
-          The technologies I use will continue to change throughout my career.
-        </p>
-        <p>What I don&apos;t think will change is how I approach problems.</p>
-        <p className="text-portfolio-secondary">
-          Understand them first.
-          <span className="block" />
-          Keep the solution as simple as possible.
-          <span className="block" />
-          Leave the product a little better than I found it.
-        </p>
-        <p>That&apos;s the kind of engineer I continue trying to become.</p>
-      </>
     ),
   },
 ];
@@ -142,7 +114,7 @@ function AccordionItem({
   isLast: boolean;
 }) {
   return (
-    <div className={isLast ? "" : "border-b border-portfolio-card"}>
+    <div className={isLast ? "" : "border-portfolio-card border-b"}>
       <button
         type="button"
         onClick={onToggle}
@@ -194,7 +166,7 @@ function AccordionItem({
             transition={{ duration: 0.25, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="flex flex-col gap-3 pb-5 text-xs leading-relaxed text-portfolio-muted sm:text-sm">
+            <div className="text-portfolio-muted flex flex-col gap-3 pb-5 text-xs leading-relaxed sm:text-sm">
               {entry.answer}
             </div>
           </motion.div>
@@ -209,28 +181,31 @@ export default function BehindMyWork() {
 
   return (
     <section id="behind-my-work" aria-label="Behind my work">
-      <SectionHeader title="Behind My Work" />
-      <div className="mb-2 flex flex-col gap-3 text-sm leading-relaxed text-portfolio-muted">
-        <p>
-          Every engineer writes code.{" "} <br />
-          <span >
-            These are the questions I ask before I write mine.
-          </span>
-        </p>
-      </div>
-      <div className="flex flex-col">
+      <Reveal>
+        <SectionHeader title="Behind My Work" />
+      </Reveal>
+      <Reveal delay={0.08}>
+        <div className="text-portfolio-muted mb-2 flex flex-col gap-3 text-sm leading-relaxed">
+          <p>
+            Every engineer writes code. <br />
+            <span>These are the questions I ask before I write mine.</span>
+          </p>
+        </div>
+      </Reveal>
+      <RevealGroup className="flex flex-col" delay={0.16}>
         {entries.map((entry, index) => (
-          <AccordionItem
-            key={entry.question}
-            entry={entry}
-            isOpen={openIndex === index}
-            isLast={index === entries.length - 1}
-            onToggle={() =>
-              setOpenIndex((prev) => (prev === index ? null : index))
-            }
-          />
+          <RevealItem key={entry.question}>
+            <AccordionItem
+              entry={entry}
+              isOpen={openIndex === index}
+              isLast={index === entries.length - 1}
+              onToggle={() =>
+                setOpenIndex((prev) => (prev === index ? null : index))
+              }
+            />
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
     </section>
   );
 }

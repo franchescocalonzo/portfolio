@@ -37,7 +37,7 @@ const previousRoles: Role[] = [
     location: "Makati PH",
   },
   {
-    title: "Quality Assurance Associate",
+    title: "Quality Assurance Intern",
     period: "2018",
     company: "Cormant Technologies",
     companyUrl: "https://cormant.io/",
