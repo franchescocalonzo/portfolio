@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import SectionHeader from "@/components/SectionHeader";
-import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
+import { SectionReveal, SectionRevealItem, RevealItem } from "@/components/Reveal";
+import { LinkArrow, LinkSheen, LinkSheenMix, LinkUnderline } from "@/components/ExternalLinks";
 
 type Product = {
   company: string;
@@ -12,6 +13,12 @@ type Product = {
   period: string;
   context?: string;
   product: string;
+  /** Links the product name where it first appears in `product`. */
+  productLink?: { name: string; href: string };
+  /** Links the company name where it first appears in `product`. Quieter than productLink. */
+  companyLink?: { name: string; href: string };
+  /** Opens the company site from the card title. */
+  companyHref?: string;
   whyItMatters: string;
   contribution: string[];
   learned: string[];
@@ -23,6 +30,7 @@ const products: Product[] = [
     company: "Bell Canada",
     tagline: "Cell site project management platform.",
     period: "2025 — Present",
+    companyHref: "https://www.bell.ca/",
     product:
       "SmartPort is an internal platform used by Bell Mobility to manage projects across wireless sites throughout Canada, from bidding up to project awarding.",
     whyItMatters:
@@ -51,8 +59,11 @@ const products: Product[] = [
     company: "CIS Bayad Center Inc.",
     tagline: "B2B platform for bills and payment services.",
     period: "2023 — 2025",
+    companyHref: "https://www.bayad.com/",
     product:
       "Bayad Web is a B2B bills payment platform that enables Bayad and partner businesses to process a wide range of customer payments, from utilities and telecommunications to government services and more.",
+    productLink: { name: "Bayad Web", href: "https://bfa.bayad.com/" },
+    companyLink: { name: "Bayad", href: "https://www.bayad.com/" },
     whyItMatters:
       "It gives businesses a centralized platform to process multiple payment services through a single workflow, while helping them serve customers who prefer or rely on in-person payments.",
     contribution: [
@@ -79,6 +90,7 @@ const products: Product[] = [
     company: "Moneygment",
     tagline: "Digital payments platform.",
     period: "2019 — 2023",
+    companyHref: "https://moneygment.ph/",
     product:
       "Moneygment is a digital payments platform that helps individuals and small businesses manage government contributions and payments through SSS, Pag-IBIG, PhilHealth, and more.",
     whyItMatters:
@@ -99,8 +111,10 @@ const products: Product[] = [
     tagline: "Digital forms and field workflow platform.",
     period: "2018",
     context: "Internship",
+    companyHref: "https://cormant.io/",
     product:
       "PowerForm is a digital forms and workflow platform that helps businesses replace manual processes with configurable forms, task assignments, and mobile field operations.",
+    productLink: { name: "PowerForm", href: "https://powerform.io/" },
     whyItMatters:
       "It helps businesses digitize manual workflows, allowing field teams to complete tasks electronically while giving operations teams better visibility and control.",
     contribution: [
@@ -116,15 +130,117 @@ const products: Product[] = [
   },
 ];
 
+const techLinks: Record<string, string> = {
+  React: "https://react.dev",
+  Python: "https://www.python.org",
+  JavaScript: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+  "Ant Design": "https://ant.design",
+  "TanStack Table": "https://tanstack.com/table",
+  IQGeo: "https://www.iqgeo.com",
+  PostgreSQL: "https://www.postgresql.org",
+  "Material UI": "https://mui.com",
+  "Node.js": "https://nodejs.org",
+  AWS: "https://aws.amazon.com",
+  "New Relic": "https://newrelic.com",
+  SQL: "https://developer.mozilla.org/en-US/docs/Glossary/SQL",
+  Linux: "https://www.linux.org",
+};
+
 function BuiltWithList({ technologies }: { technologies: string[] }) {
-  return <p>{technologies.join(" · ")}</p>;
+  return (
+    <p>
+      {technologies.map((tech, i) => {
+        const href = techLinks[tech];
+        return (
+          <span key={tech}>
+            {href ? (
+              <LinkSheen href={href}>{tech}</LinkSheen>
+            ) : (
+              tech
+            )}
+            {i < technologies.length - 1 && (
+              <span className="select-none"> · </span>
+            )}
+          </span>
+        );
+      })}
+    </p>
+  );
+}
+
+type InlineLink = {
+  name: string;
+  href: string;
+  variant: "sheen" | "underline";
+};
+
+/** Renders product copy with named phrases turned into links, in place. */
+function ProductLead({ text, links }: { text: string; links: InlineLink[] }) {
+  const matches: { start: number; end: number; link: InlineLink }[] = [];
+
+  for (const link of [...links].sort((a, b) => b.name.length - a.name.length)) {
+    const start = text.indexOf(link.name);
+    if (start === -1) continue;
+    const end = start + link.name.length;
+    const overlaps = matches.some(
+      (match) => start < match.end && end > match.start,
+    );
+    if (overlaps) continue;
+    matches.push({ start, end, link });
+  }
+
+  if (matches.length === 0) return <>{text}</>;
+
+  matches.sort((a, b) => a.start - b.start);
+
+  const parts: React.ReactNode[] = [];
+  let cursor = 0;
+
+  for (const match of matches) {
+    if (cursor < match.start) {
+      parts.push(text.slice(cursor, match.start));
+    }
+
+    const Link = match.link.variant === "sheen" ? LinkSheenMix : LinkUnderline;
+
+    parts.push(
+      <Link key={`${match.link.href}-${match.start}`} href={match.link.href}>
+        {match.link.name}
+      </Link>,
+    );
+    cursor = match.end;
+  }
+
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor));
+  }
+
+  return <>{parts}</>;
 }
 
 type Block = { label: string; body: React.ReactNode };
 
+function productBody(product: Product) {
+  const links: InlineLink[] = [];
+  if (product.productLink) {
+    links.push({ ...product.productLink, variant: "sheen" });
+  }
+  if (product.companyLink) {
+    links.push({ ...product.companyLink, variant: "underline" });
+  }
+  return links.length ? (
+    <ProductLead text={product.product} links={links} />
+  ) : (
+    product.product
+  );
+}
+
 function useBlocks(product: Product): Block[] {
   const blocks: Block[] = [
-    { label: "The Product", body: product.product },
+    {
+      label: "The Product",
+      body: productBody(product),
+    },
     { label: "Why It Matters?", body: product.whyItMatters },
     {
       label: "My Contribution",
@@ -186,77 +302,103 @@ function ProductCard({
   isOpen: boolean;
   onToggle: () => void;
 }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  const scrollCardIntoView = () => {
+    if (!isOpen || !cardRef.current) return;
+
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    cardRef.current.scrollIntoView({
+      behavior: reduceMotion ? "auto" : "smooth",
+      block: "start",
+    });
+  };
+
+  const titleClass = `text-portfolio text-sm font-medium sm:text-base`;
+
   return (
     <div
-      className={`group rounded border transition-colors duration-200 ${
+      ref={cardRef}
+      className={`group scroll-mt-6 rounded border transition-colors duration-200 ${
         isOpen
           ? "border-portfolio-card bg-portfolio-card"
           : "hover:border-portfolio-card-border hover:bg-portfolio-card border-transparent"
       }`}
     >
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        className="flex w-full items-start justify-between px-4 py-3 text-left"
-      >
-        <div className="min-w-0 flex-1">
-          <h3
-            className={`text-sm font-medium transition-colors duration-200 sm:text-base ${
-              isOpen
-                ? "text-portfolio"
-                : "text-portfolio-muted group-hover:text-portfolio"
-            }`}
-          >
-            {product.company}
-          </h3>
-          <p
-            className={`mt-0.5 text-xs transition-colors duration-200 ${
-              isOpen
-                ? "text-portfolio-secondary"
-                : "text-portfolio-muted group-hover:text-portfolio-secondary"
-            }`}
-          >
-            {product.tagline}
-          </p>
-        </div>
-        <div className="ml-4 flex shrink-0 items-center gap-3">
-          <span
-            className={`text-xs transition-colors duration-200 ${
-              isOpen
-                ? "text-portfolio-secondary"
-                : "text-portfolio-muted group-hover:text-portfolio-secondary"
-            }`}
-          >
-            {product.period}
-            {product.context ? ` · ${product.context}` : ""}
-          </span>
-          <motion.span
-            animate={{ rotate: isOpen ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-            className={`flex items-center transition-colors duration-200 ${
-              isOpen
-                ? "text-portfolio"
-                : "text-portfolio-subtle group-hover:text-portfolio"
-            }`}
-          >
-            <svg
-              stroke="currentColor"
-              fill="currentColor"
-              strokeWidth="0"
-              viewBox="0 0 20 20"
-              aria-hidden
-              className="h-4 w-4"
+      <div className="relative">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-label={`${isOpen ? "Hide" : "Show"} details for ${product.company}`}
+          className="absolute inset-0 z-0 rounded"
+        />
+        <div className="pointer-events-none relative z-10 flex items-start justify-between px-4 py-3">
+          <div className="min-w-0 flex-1">
+            {product.companyHref ? (
+              <h3 className="pointer-events-auto w-fit">
+                <LinkArrow
+                  href={product.companyHref}
+                  tone="inherit"
+                  className={titleClass}
+                >
+                  {product.company}
+                </LinkArrow>
+              </h3>
+            ) : (
+              <h3 className={titleClass}>{product.company}</h3>
+            )}
+            <p
+              className={`mt-0.5 text-xs transition-colors duration-200 ${
+                isOpen
+                  ? "text-portfolio-secondary"
+                  : "text-portfolio-muted group-hover:text-portfolio-secondary"
+              }`}
             >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </motion.span>
+              {product.tagline}
+            </p>
+          </div>
+          <div className="ml-4 flex shrink-0 items-center gap-3">
+            <span
+              className={`text-xs transition-colors duration-200 ${
+                isOpen
+                  ? "text-portfolio-secondary"
+                  : "text-portfolio-muted group-hover:text-portfolio-secondary"
+              }`}
+            >
+              {product.period}
+              {product.context ? ` · ${product.context}` : ""}
+            </span>
+            <motion.span
+              animate={{ rotate: isOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+              className={`flex items-center transition-colors duration-200 ${
+                isOpen
+                  ? "text-portfolio"
+                  : "text-portfolio-subtle group-hover:text-portfolio"
+              }`}
+            >
+              <svg
+                stroke="currentColor"
+                fill="currentColor"
+                strokeWidth="0"
+                viewBox="0 0 20 20"
+                aria-hidden
+                className="h-4 w-4"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </motion.span>
+          </div>
         </div>
-      </button>
+      </div>
 
       <AnimatePresence initial={false}>
         {isOpen && (
@@ -266,6 +408,7 @@ function ProductCard({
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
+            onAnimationComplete={scrollCardIntoView}
             className="overflow-hidden"
           >
             <div className="px-4 pt-2 pb-5">
@@ -279,34 +422,40 @@ function ProductCard({
 }
 
 export default function Products() {
-  const [openIndices, setOpenIndices] = useState<Set<number>>(() => new Set());
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (openIndex === null) return;
+
+    function handleClick(e: MouseEvent) {
+      if (sectionRef.current && !sectionRef.current.contains(e.target as Node)) {
+        setOpenIndex(null);
+      }
+    }
+
+    document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, [openIndex]);
 
   return (
-    <section id="products" aria-label="Products I've helped build">
-      <Reveal>
-        <SectionHeader title="Products I've Helped Build" />
-      </Reveal>
-      <RevealGroup className="flex flex-col gap-1" delay={0.08}>
+    <section ref={sectionRef} id="products" aria-label="Products I've helped build">
+      <SectionReveal>
+        <SectionRevealItem>
+          <SectionHeader title="Products I've Helped Build" />
+        </SectionRevealItem>
         {products.map((product, index) => (
-          <RevealItem key={product.company}>
+          <SectionRevealItem key={product.company}>
             <ProductCard
               product={product}
-              isOpen={openIndices.has(index)}
+              isOpen={openIndex === index}
               onToggle={() =>
-                setOpenIndices((prev) => {
-                  const next = new Set(prev);
-                  if (next.has(index)) {
-                    next.delete(index);
-                  } else {
-                    next.add(index);
-                  }
-                  return next;
-                })
+                setOpenIndex((prev) => (prev === index ? null : index))
               }
             />
-          </RevealItem>
+          </SectionRevealItem>
         ))}
-      </RevealGroup>
+      </SectionReveal>
     </section>
   );
 }

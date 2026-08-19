@@ -3,6 +3,7 @@
 import {
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
   type SVGProps,
@@ -16,7 +17,7 @@ import {
 
 const LINKEDIN = "https://www.linkedin.com/in/franchesco-dev/";
 const GITHUB = "https://github.com/franchescocalonzo";
-const EMAIL = "mailto:hello@franchesco.dev";
+const EMAIL = "mailto:franchesco.dev@gmail.com";
 const RESUME = "/Franchesco-Calonzo-Resume.pdf";
 const NAME = "franchesco";
 // let hasPlayedHeroIntro = false;
@@ -56,23 +57,63 @@ const socialLinks: {
 ];
 
 function TextLinks({ className = "" }: { className?: string }) {
+  const [hovered, setHovered] = useState<string | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function handleEnter(label: string) {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    setHovered(label);
+  }
+
+  function handleLeave() {
+    leaveTimer.current = setTimeout(() => setHovered(null), 80);
+  }
+
   return (
     <nav
-      className={`flex items-center justify-center gap-8 text-[#181818] dark:text-[#F5F5F3] ${className}`}
+      className={`flex items-center justify-center gap-2 ${className}`}
       aria-label="Profile links"
     >
-      {socialLinks.map(({ label, href, external, Icon }) => (
-        <a
-          key={label}
-          href={href}
-          target={external ? "_blank" : undefined}
-          rel={external ? "noopener noreferrer" : undefined}
-          aria-label={label}
-          title={label}
-          className="inline-flex h-[22px] w-[22px] items-center justify-center opacity-[0.85] transition-[opacity,transform] duration-180 ease-out hover:-translate-y-0.5 hover:opacity-100 focus-visible:outline focus-visible:outline-1 focus-visible:outline-current focus-visible:outline-offset-4"
-        >
-          <Icon className="h-[22px] w-[22px]" aria-hidden="true" />
-        </a>
+      {socialLinks.map(({ label, href, external }, i) => (
+        <span key={label} className="flex items-center gap-2">
+          {i > 0 && (
+            <span
+              aria-hidden
+              style={{
+                transition: hovered
+                  ? "opacity 500ms cubic-bezier(0.4,0,0.2,1) 20ms"
+                  : "opacity 600ms cubic-bezier(0.4,0,0.2,1)",
+                opacity: hovered ? 0.08 : 0.25,
+              }}
+              className="select-none text-[13px] text-[#181818] dark:text-[#F5F5F3]"
+            >
+              ·
+            </span>
+          )}
+          <a
+            href={href}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+            onMouseEnter={() => handleEnter(label)}
+            onMouseLeave={handleLeave}
+            style={{
+              transition:
+                hovered === label
+                  ? "opacity 200ms ease-out"
+                  : hovered !== null
+                    ? "opacity 500ms cubic-bezier(0.4,0,0.2,1) 40ms"
+                    : "opacity 600ms cubic-bezier(0.4,0,0.2,1), color 600ms cubic-bezier(0.4,0,0.2,1)",
+              opacity: hovered !== null && hovered !== label ? 0.28 : 1,
+            }}
+            className={`text-[13px] focus-visible:outline focus-visible:outline-1 focus-visible:outline-current focus-visible:outline-offset-4 ${
+              hovered === label
+                ? "link-sheen"
+                : "text-[#181818] dark:text-[#F5F5F3] opacity-45"
+            }`}
+          >
+            {label}
+          </a>
+        </span>
       ))}
     </nav>
   );
@@ -292,7 +333,7 @@ function HeroSignatures({ variant }: { variant: NameVariant }) {
         <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.2em] text-portfolio-subtle">
           Software Engineer · Philippines
         </p>
-        <div className="mx-auto mt-10 max-w-sm space-y-4 text-sm leading-relaxed text-portfolio-muted">
+        <div className="mx-auto mt-10 max-w-sm space-y-4 text-sm leading-relaxed text-portfolio-secondary">
           <p>
             Building and improving production web applications used by real
             businesses.
@@ -401,7 +442,7 @@ function HeroTypography({
                 Software Engineer · Philippines
               </p>
             </RevealHeroItem>
-            <div className="mx-auto mt-10 max-w-sm space-y-4 text-sm leading-relaxed text-portfolio-muted">
+            <div className="mx-auto mt-10 max-w-sm space-y-4 text-sm leading-relaxed text-portfolio-secondary">
               <RevealHeroItem delay={0.16}>
                 <p>
                   Building and improving production web applications used by
@@ -824,16 +865,11 @@ function useHeroIntro({
   return { titleAnchored, revealReady, introText, showCursor };
 }
 
-export default function HeroExplorer({
-  onIntroComplete,
-  onTitleAnchor,
-}: {
-  onIntroComplete?: () => void;
-  onTitleAnchor?: () => void;
-}) {
-  useTypeFonts();
+export default function HeroExplorer() {
+  // useTypeFonts() is only needed when the ExplorerPanel is enabled.
+  // useTypeFonts();
   const { titleAnchored, revealReady, introText, showCursor } =
-    useHeroIntro({ onComplete: onIntroComplete, onTitleAnchor });
+    useHeroIntro({});
 
   const [mode, setMode] = useState<ExplorerMode>("type");
   const [sigActive, setSigActive] = useState(1);

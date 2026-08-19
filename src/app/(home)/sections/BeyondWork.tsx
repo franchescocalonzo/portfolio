@@ -1,5 +1,5 @@
 import SectionHeader from "@/components/SectionHeader";
-import { Reveal } from "@/components/Reveal";
+import { SectionReveal, SectionRevealItem } from "@/components/Reveal";
 
 const interests = [
   { emoji: "🚀", label: "PaReserve" },
@@ -10,10 +10,11 @@ const interests = [
 export default function BeyondWork() {
   return (
     <section id="beyond-work" aria-label="Beyond work">
-      <Reveal>
-        <SectionHeader title="Beyond Work" />
-      </Reveal>
-      <Reveal delay={0.08}>
+      <SectionReveal>
+        <SectionRevealItem>
+          <SectionHeader title="Beyond Work" />
+        </SectionRevealItem>
+        <SectionRevealItem>
         <div className="border-portfolio-card bg-portfolio-card rounded border px-5 py-6 sm:px-6">
           <p className="text-portfolio text-sm font-medium">Outside of Work</p>
           <div className="text-portfolio-muted mt-3 flex flex-col gap-3 text-sm leading-relaxed">
@@ -49,7 +50,8 @@ export default function BeyondWork() {
             ))}
           </div>
         </div>
-      </Reveal>
+        </SectionRevealItem>
+      </SectionReveal>
     </section>
   );
 }

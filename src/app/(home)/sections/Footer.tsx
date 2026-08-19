@@ -1,60 +1,47 @@
-import { Reveal } from "@/components/Reveal";
+import { SectionReveal, SectionRevealItem } from "@/components/Reveal";
+
+const tools = [
+  { label: "Figma", href: "https://www.figma.com/" },
+  { label: "Next.js", href: "https://nextjs.org/" },
+  { label: "Tailwind CSS", href: "https://tailwindcss.com/" },
+  { label: "Vercel", href: "https://vercel.com/" },
+];
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <Reveal>
-      <footer className="border-portfolio-card mt-12 border-t pt-6 pb-6 text-sm transition-colors">
-        <p className="text-portfolio-muted mb-2 text-[0.8rem]">
-          Designed in{" "}
-          <a
-            href="https://www.figma.com/"
-            rel="noreferrer noopener"
-            target="_blank"
-            className="text-portfolio-secondary hover:text-portfolio font-semibold transition-colors"
-          >
-            Figma
-          </a>
-          , built with{" "}
-          <a
-            href="https://nextjs.org/"
-            rel="noreferrer noopener"
-            target="_blank"
-            className="text-portfolio-secondary hover:text-portfolio font-semibold transition-colors"
-          >
-            Next.js
-          </a>{" "}
-          and{" "}
-          <a
-            href="https://tailwindcss.com/"
-            rel="noreferrer noopener"
-            target="_blank"
-            className="text-portfolio-secondary hover:text-portfolio font-semibold transition-colors"
-          >
-            Tailwind CSS
-          </a>
-          , deployed on{" "}
-          <a
-            href="https://vercel.com/"
-            rel="noreferrer noopener"
-            target="_blank"
-            className="text-portfolio-secondary hover:text-portfolio font-semibold transition-colors"
-          >
-            Vercel
-          </a>
-          .
-        </p>
-        <p className="text-portfolio-muted text-[0.8rem]">
-          © {currentYear} Franchesco Calonzo ·{" "}
-          <a
-            href="mailto:hello@franchesco.dev"
-            className="text-portfolio-secondary hover:text-portfolio font-semibold transition-colors"
-          >
-            Get in touch
-          </a>{" "}
-          · Simplicity in every detail.
-        </p>
+    <SectionReveal>
+      <SectionRevealItem>
+      <footer className="border-portfolio-card mt-12 border-t pt-6 pb-6 transition-colors">
+        <div className="flex flex-col gap-1.5 text-left">
+            <p className="text-portfolio-muted text-[0.75rem] leading-relaxed">
+              Designed in{" "}
+              <a href={tools[0].href} rel="noreferrer noopener" target="_blank" className="link-sheen font-medium">
+                {tools[0].label}
+              </a>
+              , built with{" "}
+              <a href={tools[1].href} rel="noreferrer noopener" target="_blank" className="link-sheen font-medium">
+                {tools[1].label}
+              </a>{" "}
+              and{" "}
+              <a href={tools[2].href} rel="noreferrer noopener" target="_blank" className="link-sheen font-medium">
+                {tools[2].label}
+              </a>
+              , deployed on{" "}
+              <a href={tools[3].href} rel="noreferrer noopener" target="_blank" className="link-sheen font-medium">
+                {tools[3].label}
+              </a>
+              .
+            </p>
+            <p className="text-portfolio-muted text-[0.75rem]">
+              © {currentYear} Franchesco Calonzo ·{" "}
+              <a href="mailto:franchesco.dev@gmail.com" className="link-sheen font-medium">
+                franchesco.dev@gmail.com
+              </a>
+            </p>
+        </div>
       </footer>
-    </Reveal>
+      </SectionRevealItem>
+    </SectionReveal>
   );
 }

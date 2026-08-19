@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import SectionHeader from "@/components/SectionHeader";
-import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
+import { SectionReveal, SectionRevealItem } from "@/components/Reveal";
 
 type Entry = {
   question: string;
@@ -181,20 +181,20 @@ export default function BehindMyWork() {
 
   return (
     <section id="behind-my-work" aria-label="Behind my work">
-      <Reveal>
-        <SectionHeader title="Behind My Work" />
-      </Reveal>
-      <Reveal delay={0.08}>
-        <div className="text-portfolio-muted mb-2 flex flex-col gap-3 text-sm leading-relaxed">
-          <p>
-            Every engineer writes code. <br />
-            <span>These are the questions I ask before I write mine.</span>
-          </p>
-        </div>
-      </Reveal>
-      <RevealGroup className="flex flex-col" delay={0.16}>
+      <SectionReveal>
+        <SectionRevealItem>
+          <SectionHeader title="Behind My Work" />
+        </SectionRevealItem>
+        <SectionRevealItem>
+          <div className="text-portfolio-muted mb-2 flex flex-col gap-3 text-sm leading-relaxed">
+            <p>
+              Every engineer writes code. <br />
+              <span>These are the questions I ask before I write mine.</span>
+            </p>
+          </div>
+        </SectionRevealItem>
         {entries.map((entry, index) => (
-          <RevealItem key={entry.question}>
+          <SectionRevealItem key={entry.question}>
             <AccordionItem
               entry={entry}
               isOpen={openIndex === index}
@@ -203,9 +203,9 @@ export default function BehindMyWork() {
                 setOpenIndex((prev) => (prev === index ? null : index))
               }
             />
-          </RevealItem>
+          </SectionRevealItem>
         ))}
-      </RevealGroup>
+      </SectionReveal>
     </section>
   );
 }

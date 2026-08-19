@@ -23,7 +23,7 @@ export default function Header() {
         </p>
         <div className="flex items-center gap-4">
           <a
-            href="mailto:hello@franchesco.dev"
+            href="mailto:franchesco.dev@gmail.com"
             className="group inline-flex animate-blur items-center gap-1 text-sm font-medium text-portfolio-secondary transition-colors hover:text-portfolio"
           >
             Say hello
