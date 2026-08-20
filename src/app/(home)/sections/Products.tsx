@@ -33,6 +33,7 @@ const products: Product[] = [
     companyHref: "https://www.bell.ca/",
     product:
       "SmartPort is an internal platform used by Bell Mobility to manage projects across wireless sites throughout Canada, from bidding up to project awarding.",
+    productLink: { name: "SmartPort", href: "https://www.bipds.ca/" },
     whyItMatters:
       "It centralizes the bidding and project-award process, making it easier for teams to manage contractors, approvals, site information, and the work that follows.",
     contribution: [

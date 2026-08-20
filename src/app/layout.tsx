@@ -9,8 +9,7 @@ const description =
   "Building and improving production web applications for real businesses.";
 
 export const metadata: Metadata = {
-  // Placeholder domain — replace with your deployed URL
-  metadataBase: new URL("https://franchesco-calonzo.vercel.app"),
+  metadataBase: new URL("https://franchesco.vercel.app"),
   title,
   description,
   openGraph: {
